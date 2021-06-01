@@ -1,0 +1,394 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>贪吃蛇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft YaHei";
+        }
+        body{
+            background-image:url("22.png") ;
+        }
+        #page {
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 20px;
+            height:550px;
+            width: 1200px;
+        }
+
+        #yard {
+            width: 600px;
+            border: 1px solid gray;
+            box-shadow: 0 0 10px black;
+            float: left;
+        }
+        
+        #Table{
+            width: 350px;
+            height: 400px;
+            
+            border: 1px solid rgb(2, 29, 39);
+            float:right;
+
+        }
+        
+        #record{
+            width: 100px;
+            height:250px;
+            margin-top: 30px;
+            margin-left:620px;
+            border: 2px solid rgb(2, 29, 39);
+        }
+
+        #mark {
+            font-size: 10px;
+            font-weight: 400;
+        }
+
+        #mark_con {
+            color: rgb(20, 11, 31);
+        }
+        #help{
+            width: 100px;
+            height:110px;
+            margin-top: 0px;
+            margin-left:620px;
+            border: 2px solid rgb(2, 29, 39);
+        }
+        button {
+            width: 30px;
+            height: 20px;
+            color: white;
+            font-weight: bold;
+            border: #A032F9 solid 1px;
+            border-radius: 2px;
+            display: inline-block;
+            background: -moz-linear-gradient(top, #BF6BFE, #9114F5);
+            background: -o-linear-gradient(top, #BF6BE, #9114F5);
+            background: -webkit-gradient(linear, 0 0, 0 bottom, from(#BF6BFE), to(#9114F5));
+            background: linear-gradient(top, #BF6BFE, #9114F5);
+        }
+        button1 {
+            width: 100px;
+            height: 30px;
+            color: white;
+            font-weight: bold;
+            border: #A032F9 solid 1px;
+            border-radius: 2px;
+            display: inline-block;
+            background: -moz-linear-gradient(top, #BF6BFE, #9114F5);
+            background: -o-linear-gradient(top, #BF6BE, #9114F5);
+            background: -webkit-gradient(linear, 0 0, 0 bottom, from(#BF6BFE), to(#9114F5));
+            background: linear-gradient(top, #BF6BFE, #9114F5);
+        }
+        button:hover {
+            background: #A032F9;
+            filter: none;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="page">
+        <div id="Table" >
+            <table style="margin-top: 0px;margin-left: 0px;height: 50px;">
+                <tr>
+                    <td><button id="ai" style="margin-top: 0px; margin-left: 5px; width:45px" onclick="Ai()" > AI模式</button></td>   
+                    <td><button id="tiaoshi" style="margin-top: 0px;margin-left: 100px;width:45px "onclick="SIMPLE()" >手动模式</button></td>
+                    
+                    
+                </tr>
+            </table>
+            <table style="margin-top: 00px;margin-left: 0px;">
+                <tr>
+                    <td><button id="OPEN" style="margin-top: 0px; margin-left: 3px; width:45px;" onclick="unit()" > 开始</button></td> 
+                    <td><button id="pauSe" style="margin-top: 0px; margin-left: 3px;width:45px;" onClick="keydown(80) " > 暂停</button></td> 
+                    <td><button id="end" style="margin-top: 0px; margin-left: 3px;width:45px;" > 结束</button></td> 
+                    <td style="margin-left: 150px;margin-top: 0px;width: 50px;height: 10px;" >速度：</div>
+                    <td><button id="sub" style="margin-top: 0px;margin-left: 0px; "onclick="slow()" >-</button></td>
+                    <td><button id="pluse" style="margin-top: 0px;margin-left: 0px; "onclick="quick()" >+</button></td>
+                    
+                </tr>
+            </table>
+            <div>状态显示窗口:</div>
+            <textarea style="margin-top: 20px;border: 4px; width: 250px; height: 200px;background-color: rgb(157, 186, 229);">
+                 laaalaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaallllllllllllllllllllllllllallllllllllll
+            </textarea>
+        </div>
+        
+
+        <div id ="yard"><canvas id="canvas" height="450px" width="600px"></canvas></div>
+        <div id="help">
+            <div id="mark">
+                <center>得分：<span id="mark_con"></span></center>
+            </div>
+            <div id="helper">            
+                <table>
+                    <tr>
+                        <td></td>
+                        <td><button onClick="keydown(38);">上</button></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td><button onClick="keydown(37);">左</button></td>
+                        <td><button onClick="keydown(80);" id="pause">Pause</button></td>
+                        <td><button onClick="keydown(39);">右</button></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button onClick="keydown(40);">下</button></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <center><button onClick="window.location.href='GM2.html'">再玩一次</button></center>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    
+        <div id="record">
+            <button id="OPEN" onclick="unit()">开始游戏</button> &nbsp;&nbsp;   
+            <button  onclick="javascript:location.reload();" type="button">重新开始</button>
+            <div></div><br/>
+            <div>当前玩家：<span id="name"></span></div><br/>
+            <div>得分：<span id="score">0</span></div><br/>
+            <div><button id="historyScore_button" onclick="displayHistory()">历史记录</button>
+                <ul id="historyScore">
+                </ul>
+            </div>
+            <div><button id="ranking_button" onclick="displayRanking()"> 排行榜</button>
+                <ul id="ranking">
+                </ul>
+            </div>
+            <div>
+                <button id="clearStorage" onclick="clearStorage()">清除记录</button>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+
+
+    var BLOCK_SIZE = 15;//每个网格像素大小
+    var COLS = 40;//画布长
+    var ROWS = 30;//画布宽
+    var snakes = [];//存放蛇身体占有的所有格子的位置，数组的起始位置为蛇尾
+    var c = null;
+    var toGo = 3;
+    var snakecount = 7;//蛇的长度
+    var interval = null;
+    var foodX = 0;
+    var foodY = 0;
+    var oMark = null;
+    var isPause = false;
+    var module=[];
+    var Module=0;
+    var speed = 300;//初始300为0%速度  100%速度为50   相差250 每一下可加10%速度，即减去25
+
+    function Ai(){  //AI模式
+        ai=document.getElementById('ai');
+        ai.style.background="blue";
+        Module=0;
+        unit();
+
+    }
+    function SIMPLE(){//手动模式
+        tiaoshi=document.getElementById('tiaoshi');
+        tiaoshi.style.background="blue";
+        Module=1;
+        unit();
+
+    }
+    function text(){//将游戏状态生成文本流并且在文本框中显示
+
+    }
+    function quick(){
+        pluse=document.getElementById('pluse');
+        pluse.style.background="red";
+        if(speed >= 50){
+            speed=speed-25;
+        }
+        else
+        {
+            speed=50;
+        }
+        UN();
+    }
+    function slow(){
+        sub=document.getElementById('sub');
+        sub.style.background="red";
+        if(speed<=300){
+            speed=speed+25;
+        }
+        else
+        {
+            speed=300;
+        }
+        UN();
+    }
+    function draw() {//初始化游戏界面（画布和蛇）
+        c.clearRect(0, 0, BLOCK_SIZE * COLS, BLOCK_SIZE * ROWS);//初始清除画布内所有像素
+        for (var i = 1; i <= ROWS; i++) {//画网格
+            c.beginPath();//新建路径
+            c.moveTo(0, i * BLOCK_SIZE);//画笔定位到指定位置
+            c.lineTo(BLOCK_SIZE * COLS, i * BLOCK_SIZE);//连线到指定位置
+            c.strokeStyle = "gray";//边框颜色
+            c.stroke();//绘制边框
+        }
+        for (var i = 1; i <= COLS; i++) {//画网格
+            c.beginPath();
+            c.moveTo(i * BLOCK_SIZE, 0);
+            c.lineTo(i * BLOCK_SIZE, BLOCK_SIZE * ROWS);
+            c.stroke();
+        }
+        for (var i = 0; i < snakes.length; i++) {//画蛇
+            c.beginPath();
+            c.fillStyle = "blue";//蛇身体填充蓝色
+            c.fillRect(snakes[i].x, snakes[i].y, BLOCK_SIZE, BLOCK_SIZE);//将蛇身体每个格子填充为蓝色
+            c.moveTo(snakes[i].x, snakes[i].y);//将蛇身体每个格子的边框画成白色
+            c.lineTo(snakes[i].x + BLOCK_SIZE, snakes[i].y);
+            c.lineTo(snakes[i].x + BLOCK_SIZE, snakes[i].y + BLOCK_SIZE);
+            c.lineTo(snakes[i].x, snakes[i].y + BLOCK_SIZE);
+            c.closePath();
+            c.strokeStyle = 'white';
+            c.stroke();
+        }
+        c.beginPath();//画食物，画笔开始路径
+        c.fillStyle = 'red';//填充为红色
+        c.fillRect(foodX, foodY, BLOCK_SIZE, BLOCK_SIZE);
+        c.moveTo(foodX, foodY);
+        c.lineTo(foodX + BLOCK_SIZE, foodY);
+        c.lineTo(foodX + BLOCK_SIZE, foodY + BLOCK_SIZE);
+        c.lineTo(foodX, foodY + BLOCK_SIZE);
+        c.closePath();//闭合路径
+        c.stroke();
+    }
+
+    function addSnake() {
+        snakecount++;
+        snakes.unshift({ x: BLOCK_SIZE * COLS, y: BLOCK_SIZE * ROWS });//蛇初始位置为画布左上角
+    }
+
+    function keydown(keyCode) {// keyCode键码值，上38、下40、左37、右39   p/P：80
+        switch (keyCode) {
+            case 37://左
+                if (toGo != 1 && toGo != 3)
+                    toGo = 1;
+                break;
+            case 38://上
+                if (toGo != 2 && toGo != 4)
+                    toGo = 2;
+                break;
+            case 39://右
+                if (toGo != 3 && toGo != 1)
+                    toGo = 3;
+                break;
+            case 40://下
+                if (toGo != 4 && toGo != 2)
+                    toGo = 4;
+                break;
+            case 80://按p暂停
+                if (isPause) {
+                    interval = setInterval(move, 100);//不停调用move 函数，以0.1秒为周期
+                    isPause = false;
+                    document.getElementById('pause').innerHTML = "Pause";
+                } else {
+                    clearInterval(interval);
+                    isPause = true;
+                    document.getElementById('pause').innerHTML = "Start";
+                }
+                break;
+        }
+    }
+
+    function addFood() {//随机生成一个食物
+        foodX = Math.floor(Math.random() * (COLS - 1)) * BLOCK_SIZE;
+        foodY = Math.floor(Math.random() * (ROWS - 1)) * BLOCK_SIZE;
+    }
+
+    function isDie() {//判断贪吃蛇是否死亡
+        if (snakes[snakecount - 1].x == -20 || snakes[snakecount - 1].x == BLOCK_SIZE * COLS
+            || snakes[snakecount - 1].y == -20 || snakes[snakecount - 1].y == BLOCK_SIZE * ROWS) {
+            alert('Game Over!');//撞墙，输出'Game Over!'
+            clearInterval(interval);
+        }
+        for (var i = 0; i < snakecount - 1; i++) {
+            if (snakes[snakecount - 1].x == snakes[i].x && snakes[snakecount - 1].y == snakes[i].y) {
+                clearInterval(interval);
+                alert("Game Over!");//咬到自己，输出'Game Over!'
+            }
+        }
+    }
+
+    function isEat() {//判断贪吃蛇是否成功进食
+        if (snakes[snakecount - 1].x == foodX && snakes[snakecount - 1].y == foodY) {
+            oMark.innerHTML = (parseInt(oMark.innerHTML) + 1).toString();//分数加一
+            addFood();//再随机生成一个食物
+            addSnake();//蛇尾部加一个网格
+        }
+    }
+
+    function start() {//开始游戏
+        for (var i = 0; i < snakecount; i++) {
+            snakes[i] = { x: i * BLOCK_SIZE, y: 0 };//将蛇的初始位置存入数组
+        }
+        addFood();//生成食物
+        draw();//初始化游戏界面
+        oMark.innerHTML = 0;
+    }
+    function move() {//移动函数
+        switch (toGo) {//四个方向移动，头部加一个格子，尾部删一个格子，即实现移动
+            case 1:
+                snakes.push({ x: snakes[snakecount - 1].x - BLOCK_SIZE, y: snakes[snakecount - 1].y });
+                break;//用push将新的位置添加到数组尾部，因为数组的尾部存放的是蛇的头部位置，
+            case 2:
+                snakes.push({ x: snakes[snakecount - 1].x, y: snakes[snakecount - 1].y - BLOCK_SIZE });
+                break;
+            case 3:
+                snakes.push({ x: snakes[snakecount - 1].x + BLOCK_SIZE, y: snakes[snakecount - 1].y });
+                break;
+            case 4:
+                snakes.push({ x: snakes[snakecount - 1].x, y: snakes[snakecount - 1].y + BLOCK_SIZE });
+                break;
+            default: ;
+        }
+        snakes.shift();//数组头部元素删除，即蛇尾的格子删掉
+        isEat();//判断是否吃掉食物
+        isDie();//判断蛇是否死亡
+        draw();//更新画布
+    }
+
+    //window.onload = function () {
+    function unit(){
+        OPEN=document.getElementById('OPEN');
+        OPEN.style.background="red";
+    
+        c = document.getElementById('canvas').getContext('2d');//建立一个二维canvas画布
+        oMark = document.getElementById('mark_con');//分数
+        start();//开始游戏
+        UN();
+    }
+    function UN()
+    {
+        interval = setInterval(move, speed);//速度调节，数字越小，速度越快
+        document.onkeydown = function (event) {//键盘上某个按键被按下触发事件
+            var event = event || window.event;//（实现不同浏览器兼容的一种写法，仅此而已）
+            keydown(event.keyCode);//event.keyCode获得键盘上按下按钮的键值
+        }
+    }
+</script>
+</body>
+</html>

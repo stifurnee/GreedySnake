@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Microsoft YaHei";
+}
+
+#page {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    height: 600px;
+    width: 1000px;
+}
+
+#yard {
+    width: 800px;
+    border: 1px solid gray;
+    box-shadow: 0 0 10px black;
+    float: right;
+}
+
+#mark {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+#mark_con {
+    color: yellow;
+}
+
+button {
+    width: 60px;
+    height: 30px;
+    color: white;
+    font-weight: bold;
+    border: #A032F9 solid 1px;
+    border-radius: 4px;
+    display: inline-block;
+    background: -moz-linear-gradient(top, #BF6BFE, #9114F5);
+    background: -o-linear-gradient(top, #BF6BE, #9114F5);
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#BF6BFE), to(#9114F5));
+    background: linear-gradient(top, #BF6BFE, #9114F5);
+}
+
+button:hover {
+    background: #A032F9;
+    filter: none;
+    text-decoration: none;
+}
